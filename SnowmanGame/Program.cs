@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,8 +34,23 @@ namespace SnowmanGame
 
             #region KARDAN ADAMLAR
 
-            int snwblue1x = rnd.Next(0, 40);
-            int snwblue1y = rnd.Next(0, 40);
+            int snwblue1x, snwblue1y;
+
+            while (true)
+            {
+                snwblue1x = rnd.Next(0, 40);
+                snwblue1y = rnd.Next(0, 40);
+
+                if (snwblue1x == shtbluex && snwblue1y == shtbluey)
+                {
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
 
             int snwred1x = rnd.Next(80, 120);
             int snwred1y = rnd.Next(0, 40);
