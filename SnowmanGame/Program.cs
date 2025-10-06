@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,9 +35,9 @@ namespace SnowmanGame
 
             #region KARDAN ADAMLAR
 
-            int snwblue1x, snwblue1y;
+            int snwblue1x, snwblue1y, snwblue2x, snwblue2y, snwred1x, snwred1y, snwred2x, snwred2y;
 
-            while (true)
+            while (true)  // mavinin 1. kardanadamıyla mavinin atıcısı 
             {
                 snwblue1x = rnd.Next(0, 40);
                 snwblue1y = rnd.Next(0, 40);
@@ -49,17 +50,81 @@ namespace SnowmanGame
                 {
                     break;
                 }
+
             }
 
+            while (true) // mavinin 2. kardanadamıyla mavinin atıcısı 
+            {
+                snwblue2x = rnd.Next(0, 40);
+                snwblue2y = rnd.Next(0, 40);
 
-            int snwred1x = rnd.Next(80, 120);
-            int snwred1y = rnd.Next(0, 40);
+                if (snwblue2x == shtbluex && snwblue2y == shtbluey)
+                {
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }
 
-            int snwblue2x = rnd.Next(0, 40);
-            int snwblue2y = rnd.Next(0, 40);
+            while (true)  // mavinin kardanadamlarının takışması
+            {
 
-            int snwred2x = rnd.Next(80, 120);
-            int snwred2y = rnd.Next(0, 40);
+                if (snwblue1x == snwblue2x && snwblue1y == snwblue2y)
+                {
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+
+            }
+
+            while (true) // kırmızının 1. kardanadamıyla atıcısı
+            {
+                snwred1x = rnd.Next(80, 120);
+                snwred1y = rnd.Next(0, 40);
+
+                if (snwred1x == shtredx && snwred1y == shtredy)
+                {
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+
+
+            }
+
+            while (true) // kırmızının 2. kardanadamıyla atıcısı
+            {
+                snwred2x = rnd.Next(80, 120);
+                snwred2y = rnd.Next(0, 40);
+
+                if (snwred2x == shtredx && snwred2y == shtredy)
+                {
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            while (true) // kırmızının her iki kardanadamı
+
+                if (snwred1x == snwred2x && snwred2x == snwred2y)
+                {
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+
 
             Console.SetCursorPosition(snwblue1x, snwblue1y); //mavi takım 1. kardan adamı
             Console.Write("B");
@@ -151,7 +216,15 @@ namespace SnowmanGame
 
             #endregion
 
+            #region KARTOPU
+
+            Console.SetCursorPosition(shtbluex + 1, shtbluey);
+            Console.WriteLine("O");
+
+            #endregion
+
             Console.ReadLine();
         }
     }
 }
+
