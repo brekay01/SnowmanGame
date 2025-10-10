@@ -37,7 +37,7 @@ namespace SnowmanGame
 
             int snwblue1x, snwblue1y, snwblue2x, snwblue2y, snwred1x, snwred1y, snwred2x, snwred2y;
 
-            while (true)  // mavinin 1. kardanadamıyla mavinin atıcısı 
+            while (true) 
             {
                 snwblue1x = rnd.Next(0, 40);
                 snwblue1y = rnd.Next(0, 40);
@@ -50,10 +50,9 @@ namespace SnowmanGame
                 {
                     break;
                 }
+            } // mavinin 1. kardanadamıyla mavinin atıcısı 
 
-            }
-
-            while (true) // mavinin 2. kardanadamıyla mavinin atıcısı 
+            while (true)
             {
                 snwblue2x = rnd.Next(0, 40);
                 snwblue2y = rnd.Next(0, 40);
@@ -66,11 +65,10 @@ namespace SnowmanGame
                 {
                     break;
                 }
-            }
+            } // mavinin 2. kardanadamıyla mavinin atıcısı 
 
-            while (true)  // mavinin kardanadamlarının takışması
+            while (true) 
             {
-
                 if (snwblue1x == snwblue2x && snwblue1y == snwblue2y)
                 {
                     continue;
@@ -79,10 +77,9 @@ namespace SnowmanGame
                 {
                     break;
                 }
+            }  // mavinin kardanadamlarının takışması
 
-            }
-
-            while (true) // kırmızının 1. kardanadamıyla atıcısı
+            while (true)
             {
                 snwred1x = rnd.Next(80, 120);
                 snwred1y = rnd.Next(0, 40);
@@ -95,11 +92,9 @@ namespace SnowmanGame
                 {
                     break;
                 }
+            } // kırmızının 1. kardanadamıyla atıcısı
 
-
-            }
-
-            while (true) // kırmızının 2. kardanadamıyla atıcısı
+            while (true)
             {
                 snwred2x = rnd.Next(80, 120);
                 snwred2y = rnd.Next(0, 40);
@@ -112,10 +107,10 @@ namespace SnowmanGame
                 {
                     break;
                 }
-            }
+            } // kırmızının 2. kardanadamıyla atıcısı
 
-            while (true) // kırmızının her iki kardanadamı
-
+            while (true) 
+            {
                 if (snwred1x == snwred2x && snwred2x == snwred2y)
                 {
                     continue;
@@ -124,7 +119,7 @@ namespace SnowmanGame
                 {
                     break;
                 }
-
+            } // kırmızının her iki kardanadamı            
 
             Console.SetCursorPosition(snwblue1x, snwblue1y); //mavi takım 1. kardan adamı
             Console.Write("B");
@@ -146,8 +141,8 @@ namespace SnowmanGame
 
             int wall1x = rnd.Next(40, 80);
             int wall1y = rnd.Next(0, 40);
-
             int wall1length = rnd.Next(3, 7);
+            int wall1end = wall1y + wall1length - 1;
 
             Console.SetCursorPosition(wall1x, wall1y);
             Console.Write("#");
@@ -158,19 +153,19 @@ namespace SnowmanGame
             Console.SetCursorPosition(wall1x, (wall1y + 2));
             Console.Write("#");
 
-            if (wall1length > 3)
+            if (wall1length > 3 && wall1end < 40)
             {
                 Console.SetCursorPosition(wall1x, (wall1y + 3));
                 Console.Write("#");
             }
 
-            if (wall1length > 4)
+            if (wall1length > 4 && wall1end < 40)
             {
                 Console.SetCursorPosition(wall1x, (wall1y + 4));
                 Console.Write("#");
             }
 
-            if (wall1length > 5)
+            if (wall1length > 5 && wall1end < 40)
             {
                 Console.SetCursorPosition(wall1x, (wall1y + 5));
                 Console.Write("#");
@@ -182,8 +177,23 @@ namespace SnowmanGame
 
             int wall2x = rnd.Next(40, 80);
             int wall2y = rnd.Next(0, 40);
-
             int wall2length = rnd.Next(3, 7);
+            int wall2end = wall2y + wall2length - 1;
+            
+            while (true)
+            {
+                wall2x = rnd.Next(40, 80);
+                wall2y = rnd.Next(0, 38);
+
+                if (wall2x == wall1x && wall2y >= wall1y && wall2y <= wall1end)
+                {
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            } //2. Duvar 1. duvarla çakışıyor mu
 
             Console.SetCursorPosition(wall2x, wall2y);
             Console.Write("#");
@@ -194,19 +204,19 @@ namespace SnowmanGame
             Console.SetCursorPosition(wall2x, (wall2y + 2));
             Console.Write("#");
 
-            if (wall2length > 3)
+            if (wall2length > 3 && wall2end < 40)
             {
                 Console.SetCursorPosition(wall2x, (wall2y + 3));
                 Console.Write("#");
             }
 
-            if (wall2length > 4)
+            if (wall2length > 4 && wall2end < 40)
             {
                 Console.SetCursorPosition(wall2x, (wall2y + 4));
                 Console.Write("#");
             }
 
-            if (wall2length > 5)
+            if (wall2length > 5 && wall2end < 40)
             {
                 Console.SetCursorPosition(wall2x, (wall2y + 5));
                 Console.Write("#");
@@ -227,4 +237,3 @@ namespace SnowmanGame
         }
     }
 }
-
