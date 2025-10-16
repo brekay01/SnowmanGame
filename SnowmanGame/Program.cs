@@ -35,7 +35,7 @@ namespace SnowmanGame
             #region Kardan Adamlar
 
             int snwblue1x, snwblue1y, snwblue2x, snwblue2y, snwred1x, snwred1y, snwred2x, snwred2y;
-            
+
             // 1. Mavi Kardan Adamı
             while (true)
             {
@@ -53,7 +53,7 @@ namespace SnowmanGame
 
                     break;
                 }
-            } 
+            }
 
             // 2. Mavi Kardan Adamı
             while (true)
@@ -110,7 +110,7 @@ namespace SnowmanGame
 
                     break;
                 }
-            }        
+            }
 
             #endregion
 
@@ -118,7 +118,7 @@ namespace SnowmanGame
 
             int wall1length = rnd.Next(3, 7);
             int wall1x = rnd.Next(40, 80);
-            int wall1y = rnd.Next(0, (41 - wall1length)); 
+            int wall1y = rnd.Next(0, (41 - wall1length));
             int wall1end = wall1y + wall1length - 1;
 
             // 1. Duvar oluşturma döngüsü
@@ -197,7 +197,7 @@ namespace SnowmanGame
                 angle = Convert.ToDouble(Console.ReadLine());
                 radyan = angle * Math.PI / 180;
 
-                if (angle > 4 && angle < 86)
+                if (angle >= 5 && angle <= 85)
                 {
                     break;
                 }
@@ -219,7 +219,7 @@ namespace SnowmanGame
             {
                 speed = Convert.ToDouble(Console.ReadLine());
 
-                if (speed > 4 && speed < 26)
+                if (speed >= 5 && speed <= 25)
                 {
                     break;
                 }
@@ -248,7 +248,7 @@ namespace SnowmanGame
                 if (ballx > 119 || ballx < 0)
                 {
                     Console.SetCursorPosition(122, txty);
-                    Console.Write("Top Duvara Çarptı!");
+                    Console.Write("Top Sınıra Çarptı!");
                     txty++;
                     break;
                 }
