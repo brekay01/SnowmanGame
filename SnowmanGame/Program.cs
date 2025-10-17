@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace SnowmanGame
 {
@@ -24,11 +25,13 @@ namespace SnowmanGame
             int shtredx = rnd.Next(80, 120);
             int shtredy = rnd.Next(0, 40);
 
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.SetCursorPosition(shtbluex, shtbluey);
-            Console.Write("*");
+            Console.Write("X");
 
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.SetCursorPosition(shtredx, shtredy);
-            Console.Write("*");
+            Console.Write("X");
 
             #endregion
 
@@ -48,8 +51,9 @@ namespace SnowmanGame
                 }
                 else
                 {
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
                     Console.SetCursorPosition(snwblue1x, snwblue1y);
-                    Console.Write("B");
+                    Console.Write("&");
 
                     break;
                 }
@@ -68,7 +72,7 @@ namespace SnowmanGame
                 else
                 {
                     Console.SetCursorPosition(snwblue2x, snwblue2y);
-                    Console.Write("B");
+                    Console.Write("&");
 
                     break;
                 }
@@ -86,8 +90,9 @@ namespace SnowmanGame
                 }
                 else
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.SetCursorPosition(snwred1x, snwred1y);
-                    Console.Write("R");
+                    Console.Write("&");
 
                     break;
                 }
@@ -106,7 +111,7 @@ namespace SnowmanGame
                 else
                 {
                     Console.SetCursorPosition(snwred2x, snwred2y); //kırmızı takım 2. kardan adamı
-                    Console.Write("R");
+                    Console.Write("&");
 
                     break;
                 }
@@ -124,6 +129,7 @@ namespace SnowmanGame
             // 1. Duvar oluşturma döngüsü
             for (int wall1loop = 0; wall1loop < wall1length; wall1loop++)
             {
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.SetCursorPosition(wall1x, wall1y + wall1loop);
                 Console.Write("#");
             }
@@ -168,6 +174,7 @@ namespace SnowmanGame
             // Yazı kısmını ayıran çizgi
             for (int lineloop = 0; lineloop < 40; lineloop++)
             {
+                Console.ResetColor();
                 Console.SetCursorPosition(120, lineloop);
                 Console.Write("|");
             }
@@ -179,21 +186,30 @@ namespace SnowmanGame
             windspeed = rnd.Next(0, 401);
             windspeed = (windspeed - 200) / 100;
 
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.SetCursorPosition(122, txty);
-            Console.Write("Round 1: Mavi Takım");
+            Console.Write("Round 1: ");
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.Write("Mavi ");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write("Takım");
             txty++;
 
             Console.SetCursorPosition(122, txty);
-            Console.Write("Rüzgar Hızı: " + windspeed);
+            Console.Write("Rüzgar Hızı: ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write(windspeed);
             txty++;
 
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.SetCursorPosition(122, txty);
-            Console.Write("Açı değerini gir(5-85): ");
+            Console.Write("Açı değerini gir (5-85): ");
             txty++;
 
             //açı için 5 ile 85 arası değer kontrolü
             while (true)
             {
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 angle = Convert.ToDouble(Console.ReadLine());
                 radyan = angle * Math.PI / 180;
 
@@ -203,20 +219,25 @@ namespace SnowmanGame
                 }
                 else
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.SetCursorPosition(122, txty);
+                    Console.Write("Hata! ");
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
                     Console.Write("Lütfen 5 ile 85 arasında bir değer girin: ");
                     txty++;
                     continue;
                 }
             }
 
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.SetCursorPosition(122, txty);
-            Console.Write("Hız değerini gir(5-25): ");
+            Console.Write("Hız değerini gir (5-25): ");
             txty++;
 
             //hız için 5 ile 25 arası değer kontrolü
             while (true)
             {
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 speed = Convert.ToDouble(Console.ReadLine());
 
                 if (speed >= 5 && speed <= 25)
@@ -225,7 +246,10 @@ namespace SnowmanGame
                 }
                 else
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.SetCursorPosition(122, txty);
+                    Console.Write("Hata! ");
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
                     Console.Write("Lütfen 5 ile 25 arasında bir değer girin: ");
                     txty++;
                     continue;
@@ -240,15 +264,22 @@ namespace SnowmanGame
             double vx = speed * Math.Cos(radyan);
             double vy = -speed * Math.Sin(radyan);
 
+            int t1x = -1, t1y = -1;
+            int t2x = -1, t2y = -1;
+            int t3x = -1, t3y = -1;
+            int t4x = -1, t4y = -1;
+
             while (true)
             {
                 Thread.Sleep(50);
+
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
 
                 // sınıra çarptın?
                 if (ballx > 119 || ballx < 0)
                 {
                     Console.SetCursorPosition(122, txty);
-                    Console.Write("Top Sınıra Çarptı!");
+                    Console.Write("Sınıra Çarptın!");
                     txty++;
                     break;
                 }
@@ -257,7 +288,7 @@ namespace SnowmanGame
                 if (bally > 39)
                 {
                     Console.SetCursorPosition(122, txty);
-                    Console.Write("Top Yere Düştü!");
+                    Console.Write("Yere Düştün!");
                     txty++;
                     break;
                 }
@@ -266,7 +297,7 @@ namespace SnowmanGame
                 if ((int)ballx == shtbluex && (int)bally == shtbluey)
                 {
                     Console.SetCursorPosition(122, txty);
-                    Console.Write("Kendi Atıcını Vurdun!");
+                    Console.Write("Kendini Vurdun!");
                     txty++;
                     break;
                 }
@@ -316,12 +347,55 @@ namespace SnowmanGame
                     break;
                 }
 
-                // "o" çiz
-                if (bally >= 0 && bally < 40)
+                //1. Mor iz
+                if (t1y >= 0)
                 {
-                    Console.SetCursorPosition((int)ballx, (int)bally);
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.SetCursorPosition((int)t1x, (int)t1y);
+                    Console.Write("O");
+                }
+
+                //2. Mor iz
+                if (t2y >= 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.SetCursorPosition((int)t2x, (int)t2y);
+                    Console.Write("O");
+                }
+
+                //3. Mor iz
+                if (t3y >= 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.SetCursorPosition((int)t3x, (int)t3y);
+                    Console.Write("O");
+                }
+
+                //Gri iz
+                if (t4y >= 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.SetCursorPosition((int)t4x, (int)t4y);
                     Console.Write("o");
                 }
+
+                //Pembe iz
+                if (bally >= 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.SetCursorPosition((int)ballx, (int)bally);
+                    Console.Write("@");
+                }
+
+                t4x = t3x;
+                t3x = t2x;
+                t2x = t1x;
+                t1x = (int)ballx;
+
+                t4y = t3y;
+                t3y = t2y;
+                t2y = t1y;
+                t1y = (int)bally;
 
                 vx = vx + windspeed * dt;
                 vy = vy + g * dt;
