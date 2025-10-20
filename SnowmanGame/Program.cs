@@ -513,7 +513,7 @@ namespace SnowmanGame
 
                 #region Yeni tura geçme işlemi
 
-                Thread.Sleep(2000);
+                Thread.Sleep(1000);
                 Console.SetCursorPosition(122, txty);
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("Yeni tura geçmek için herhangi bir tuşa bas!");
