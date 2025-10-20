@@ -116,7 +116,7 @@ namespace SnowmanGame
                     wall2y = rnd.Next(0, (41 - wall2length));
                     wall2end = wall2y + wall2length - 1;
 
-                    if (round != 1)
+                    if (round != 1) // İlk round map güncellendi yazmaması için kontrol
                     {
                         Console.ForegroundColor = ConsoleColor.Magenta;
                         Console.SetCursorPosition(122, txty);
@@ -124,6 +124,12 @@ namespace SnowmanGame
                         txty++;
                     }
                 }
+
+                // Sıra Değiştirme Kontrolü
+                if (turn == 1)
+                    turn = 0;
+                else
+                    turn = 1;
 
                 #region Map Oluşturma  
 
@@ -250,16 +256,6 @@ namespace SnowmanGame
                 Console.Write("Topun Anlık Koordinatları: ");
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("- -      ");
-
-                // Sıra Değiştirme Kontrolü
-                if (turn == 1)
-                {
-                    turn = 0;
-                }
-                else
-                {
-                    turn = 1;
-                }
 
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.SetCursorPosition(0, 41);
