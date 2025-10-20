@@ -402,7 +402,7 @@ namespace SnowmanGame
                 // Topu atma döngüsü
                 while (true)
                 {
-                    Thread.Sleep(10);
+                    Thread.Sleep(20);
 
                     int x = (int)ballx;
                     int y = (int)bally;
