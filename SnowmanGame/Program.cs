@@ -15,21 +15,6 @@ namespace SnowmanGame
         {
             Random rnd = new Random();
 
-            Console.ForegroundColor = ConsoleColor.DarkGray;
-
-            // Çerçeve Çizgileri
-            for (int lineloop1 = 0; lineloop1 < 40; lineloop1++)
-            {
-                Console.SetCursorPosition(120, lineloop1);
-                Console.Write("║");
-            }
-            for (int lineloop2 = 0; lineloop2 < 120; lineloop2++)
-            {
-                Console.SetCursorPosition(lineloop2, 40);
-                Console.Write("═");
-            }
-            Console.Write("╝");
-
             #region Değişkenler
 
             double speed = 0;
@@ -66,10 +51,25 @@ namespace SnowmanGame
             int wall2y = 0;
             int wall2end = 0;
 
-            double dt = 0.04;
+            double dt = 0.03;
             double g = 1;
 
             #endregion
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+
+            // Çerçeve Çizgileri
+            for (int lineloop1 = 0; lineloop1 < 40; lineloop1++)
+            {
+                Console.SetCursorPosition(120, lineloop1);
+                Console.Write("║");
+            }
+            for (int lineloop2 = 0; lineloop2 < 120; lineloop2++)
+            {
+                Console.SetCursorPosition(lineloop2, 40);
+                Console.Write("═");
+            }
+            Console.Write("╝");
 
             while (true) // Tur Döngüsü
             {
@@ -391,14 +391,17 @@ namespace SnowmanGame
                 Console.ReadKey();
                 Console.SetCursorPosition(122, txty);
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.Write("Top atıldı!                                ");
+                Console.Write("                                           ");
+                Console.SetCursorPosition(122, txty);
+                Console.Write("Top atılıyor...");
+                Thread.Sleep(1000); 
 
                 #endregion
 
                 // Topu atma döngüsü
                 while (true)
                 {
-                    Thread.Sleep(20);
+                    Thread.Sleep(12);
 
                     int x = (int)ballx;
                     int y = (int)bally;
@@ -419,7 +422,7 @@ namespace SnowmanGame
                     if (y >= 40)
                     {
                         Console.SetCursorPosition(122, txty);
-                        Console.Write("Yere Düştün!");
+                        Console.Write("Top Yere Düştü!");
                         txty++;
                         break;
                     }
@@ -464,7 +467,7 @@ namespace SnowmanGame
                     if (x == wall1x && y >= wall1y && y <= wall1end)
                     {
                         Console.SetCursorPosition(122, txty);
-                        Console.Write("Duvara Çarptın!");
+                        Console.Write("Top Duvara Çarptı!");
                         txty++;
                         break;
                     }
@@ -473,7 +476,7 @@ namespace SnowmanGame
                     if (x == wall2x && y >= wall2y && y <= wall2end)
                     {
                         Console.SetCursorPosition(122, txty);
-                        Console.Write("Duvara Çarptın!");
+                        Console.Write("Top Duvara Çarptı!");
                         txty++;
                         break;
                     }
@@ -510,6 +513,7 @@ namespace SnowmanGame
 
                 #region Yeni tura geçme işlemi
 
+                Thread.Sleep(2000);
                 Console.SetCursorPosition(122, txty);
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("Yeni tura geçmek için herhangi bir tuşa bas!");
