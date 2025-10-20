@@ -125,13 +125,7 @@ namespace SnowmanGame
                     }
                 }
 
-                #region Map Oluşturma
-
-                Console.SetCursorPosition(47, 41);
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.Write("Topun Anlık Koordinatları: ");
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write("- -      ");
+                #region Map Oluşturma  
 
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.SetCursorPosition(shtbluex, shtbluey);
@@ -249,7 +243,13 @@ namespace SnowmanGame
 
                 #endregion
 
-                #region Round ve Rüzgar Hızı Kontrolü
+                #region Alt Panel Kontrolleri
+
+                Console.SetCursorPosition(47, 41);
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("Topun Anlık Koordinatları: ");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write("- -      ");
 
                 // Sıra Değiştirme Kontrolü
                 if (turn == 1)
