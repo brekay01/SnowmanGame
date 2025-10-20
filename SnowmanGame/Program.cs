@@ -481,19 +481,25 @@ namespace SnowmanGame
                     // Top izi çizdirme
                     if (y >= 0 && x <= 119 && x >= 0)
                     {
-                        int balltrace = rnd.Next(1, 3);
+                        Console.SetCursorPosition(x, y);
 
-                        if (balltrace == 1 && turn == 0)
+                        int tracecolor = rnd.Next(1, 3);
+
+                        if (tracecolor == 1 && turn == 0)
                             Console.ForegroundColor = ConsoleColor.DarkCyan;
-                        if (balltrace == 2 && turn == 0)
+                        if (tracecolor == 2 && turn == 0)
                             Console.ForegroundColor = ConsoleColor.Blue;
-                        if (balltrace == 1 && turn == 1)
+                        if (tracecolor == 1 && turn == 1)
                             Console.ForegroundColor = ConsoleColor.Red;
-                        if (balltrace == 2 && turn == 1)
+                        if (tracecolor == 2 && turn == 1)
                             Console.ForegroundColor = ConsoleColor.DarkRed;
 
-                        Console.SetCursorPosition(x, y);
-                        Console.Write("o");
+                        int tracesize = rnd.Next(1, 3);
+
+                        if (tracesize == 1)
+                            Console.Write("o");
+                        if (tracesize == 2)
+                            Console.Write("O");     
                     }
 
                     vx = vx + windspeed * dt;
