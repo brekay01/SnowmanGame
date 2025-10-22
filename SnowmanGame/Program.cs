@@ -13,9 +13,9 @@ namespace SnowmanGame
     {
         static void Main(string[] args)
         {
-            Random rnd = new Random();
-
             #region Değişkenler
+
+            Random rnd = new Random();
 
             double speed = 0;
             double angle = 0;
@@ -29,6 +29,8 @@ namespace SnowmanGame
             int txty = 0;
             int turn = 1; // Sıranın kimde olduğunu belirleyen değişken ( 0 = Mavi , 1 = Kırmızı )
             int round = 0;
+            int stay = 0;
+            int mapcount = 0;
 
             int shtbluex = 0;
             int shtbluey = 0;
@@ -51,14 +53,18 @@ namespace SnowmanGame
             int wall2y = 0;
             int wall2end = 0;
 
+            int snwblue1 = 1;
+            int snwblue2 = 1;
+            int snwred1 = 1;
+            int snwred2 = 1;
+
             double dt = 0.03;
             double g = 1;
 
             #endregion
 
+            // Çerçeve çizgileri
             Console.ForegroundColor = ConsoleColor.DarkGray;
-
-            // Çerçeve Çizgileri
             for (int lineloop1 = 0; lineloop1 < 40; lineloop1++)
             {
                 Console.SetCursorPosition(120, lineloop1);
@@ -73,7 +79,24 @@ namespace SnowmanGame
 
             while (true) // Tur Döngüsü
             {
-                round++;
+                // Sıra Değiştirme Kontrolü
+                if (stay == 0)
+                {
+                    if (turn == 1)
+                    {
+                        turn = 0;
+                        stay = 0;
+                        round++;
+                    }
+                    else if (turn == 0)
+                    {
+                        turn = 1;
+                        round++;
+                        stay = 0;
+                    }
+                }
+                else if (stay == 1)
+                    stay = 0;
 
                 // Mapi temizleme döngüsü
                 for (int cx = 0; cx < 120; cx++)
@@ -86,7 +109,7 @@ namespace SnowmanGame
                 }
 
                 // 3 Turda Bir Random Değişme Kontrolü
-                if (round % 3 == 1)
+                if (round % 6 == 1)
                 {
                     shtbluex = rnd.Next(0, 40);
                     shtbluey = rnd.Next(0, 40);
@@ -116,20 +139,27 @@ namespace SnowmanGame
                     wall2y = rnd.Next(0, (41 - wall2length));
                     wall2end = wall2y + wall2length - 1;
 
+                    mapcount++;
+
                     if (round != 1) // İlk round map güncellendi yazmaması için kontrol
                     {
+                        for (int t1 = 122; t1 < 180; t1++)
+                        {
+                            for (int t2 = 0; t2 < 43; t2++)
+                            {
+                                Console.SetCursorPosition(t1, t2);
+                                Console.Write(" ");
+                            }
+                        }
+
+                        txty = 0;
+
                         Console.ForegroundColor = ConsoleColor.Magenta;
                         Console.SetCursorPosition(122, txty);
                         Console.WriteLine("Map Güncellendi!");
                         txty++;
                     }
                 }
-
-                // Sıra Değiştirme Kontrolü
-                if (turn == 1)
-                    turn = 0;
-                else
-                    turn = 1;
 
                 #region Map Oluşturma  
 
@@ -144,75 +174,93 @@ namespace SnowmanGame
                 // 1. Mavi Kardan Adamı
                 while (true)
                 {
-                    if (snwblue1x == shtbluex && snwblue1y == shtbluey)
+                    if (snwblue1 == 1)
                     {
-                        snwblue1x = rnd.Next(0, 40);
-                        snwblue1y = rnd.Next(0, 40);
-                        continue;
-                    }
-                    else
-                    {
-                        Console.ForegroundColor = ConsoleColor.DarkCyan;
-                        Console.SetCursorPosition(snwblue1x, snwblue1y);
-                        Console.Write("&");
+                        if (snwblue1x == shtbluex && snwblue1y == shtbluey)
+                        {
+                            snwblue1x = rnd.Next(0, 40);
+                            snwblue1y = rnd.Next(0, 40);
+                            continue;
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkCyan;
+                            Console.SetCursorPosition(snwblue1x, snwblue1y);
+                            Console.Write("&");
 
-                        break;
+                            break;
+                        }
                     }
+                    break;
                 }
 
                 // 2. Mavi Kardan Adamı
                 while (true)
                 {
-                    if (snwblue2x == shtbluex && snwblue2y == shtbluey || snwblue2x == snwblue1x && snwblue2y == snwblue1y)
+                    if (snwblue2 == 1)
                     {
-                        snwblue2x = rnd.Next(0, 40);
-                        snwblue2y = rnd.Next(0, 40);
-                        continue;
-                    }
-                    else
-                    {
-                        Console.SetCursorPosition(snwblue2x, snwblue2y);
-                        Console.Write("&");
+                        if (snwblue2x == shtbluex && snwblue2y == shtbluey || snwblue2x == snwblue1x && snwblue2y == snwblue1y)
+                        {
+                            snwblue2x = rnd.Next(0, 40);
+                            snwblue2y = rnd.Next(0, 40);
+                            continue;
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkCyan;
+                            Console.SetCursorPosition(snwblue2x, snwblue2y);
+                            Console.Write("&");
 
-                        break;
+                            break;
+                        }
                     }
+                    break;
                 }
 
                 // 1. Kırmızı Kardan Adamı
                 while (true)
                 {
-                    if (snwred1x == shtredx && snwred1y == shtredy)
+                    if (snwred1 == 1)
                     {
-                        snwred1x = rnd.Next(80, 120);
-                        snwred1y = rnd.Next(0, 40);
-                        continue;
-                    }
-                    else
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.SetCursorPosition(snwred1x, snwred1y);
-                        Console.Write("&");
+                        if (snwred1x == shtredx && snwred1y == shtredy)
+                        {
+                            snwred1x = rnd.Next(80, 120);
+                            snwred1y = rnd.Next(0, 40);
+                            continue;
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.SetCursorPosition(snwred1x, snwred1y);
+                            Console.Write("&");
 
-                        break;
+                            break;
+                        }
                     }
+                    break;
                 }
 
                 // 2. Kırmızı Kardan Adamı
                 while (true)
                 {
-                    if (snwred2x == shtredx && snwred2y == shtredy || snwred2x == snwred1x && snwred2y == snwred1y)
+                    if (snwred2 == 1)
                     {
-                        snwred2x = rnd.Next(80, 120);
-                        snwred2y = rnd.Next(0, 40);
-                        continue;
-                    }
-                    else
-                    {
-                        Console.SetCursorPosition(snwred2x, snwred2y); //kırmızı takım 2. kardan adamı
-                        Console.Write("&");
+                        if (snwred2x == shtredx && snwred2y == shtredy || snwred2x == snwred1x && snwred2y == snwred1y)
+                        {
+                            snwred2x = rnd.Next(80, 120);
+                            snwred2y = rnd.Next(0, 40);
+                            continue;
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.SetCursorPosition(snwred2x, snwred2y); //kırmızı takım 2. kardan adamı
+                            Console.Write("&");
 
-                        break;
+                            break;
+                        }
                     }
+                    break;
                 }
 
                 // 1. Duvar Oluşturma Döngüsü
@@ -251,7 +299,7 @@ namespace SnowmanGame
 
                 #region Alt Panel Kontrolleri
 
-                Console.SetCursorPosition(47, 41);
+                Console.SetCursorPosition(57, 41);
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("Topun Anlık Koordinatları: ");
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -260,7 +308,7 @@ namespace SnowmanGame
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.SetCursorPosition(0, 41);
                 Console.Write("Round ");
-                Console.Write(round);
+                Console.Write((round + 1) / 2);
                 Console.Write(": ");
                 if (turn == 0)
                 {
@@ -275,6 +323,12 @@ namespace SnowmanGame
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("Takım");
 
+                Console.SetCursorPosition(32, 41);
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("Map " + mapcount + ": ");
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write("(" + ((round - 1) % 6 + 1) + "/6)");
+
                 windspeed = rnd.Next(0, 401);
                 windspeed = (windspeed - 200) / 100;
                 Console.SetCursorPosition(103, 41);
@@ -288,6 +342,8 @@ namespace SnowmanGame
                 #region Açı ve hız değerleri alma ve oyunu başlatma
 
                 Console.ForegroundColor = ConsoleColor.White;
+                Console.SetCursorPosition(122, txty);
+                Console.Write("                                                  ");
                 Console.SetCursorPosition(122, txty);
                 Console.Write("Açı Değeri Girin");
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -307,8 +363,10 @@ namespace SnowmanGame
                         Console.SetCursorPosition(122, txty);
                         Console.Write("Hata! ");
                         Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write("Lütfen sayı girin: ");
-                        txty++;
+                        Console.Write("Lütfen sayı girin                      ");
+                        Console.SetCursorPosition(147, txty - 1);
+                        Console.Write("                    ");
+                        Console.SetCursorPosition(147, txty - 1);
                         continue;
                     }
                     else if (angle < 5 || angle > 85)
@@ -317,8 +375,10 @@ namespace SnowmanGame
                         Console.SetCursorPosition(122, txty);
                         Console.Write("Hata! ");
                         Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write("Lütfen 5 ile 85 arasında bir sayı girin: ");
-                        txty++;
+                        Console.Write("Lütfen 5 ile 85 arasında bir sayı girin");
+                        Console.SetCursorPosition(147, txty - 1);
+                        Console.Write("                    ");
+                        Console.SetCursorPosition(147, txty - 1);
                         continue;
                     }
                     else
@@ -330,6 +390,8 @@ namespace SnowmanGame
                 radyan = angle * Math.PI / 180;
 
                 Console.ForegroundColor = ConsoleColor.White;
+                Console.SetCursorPosition(122, txty);
+                Console.Write("                                                  ");
                 Console.SetCursorPosition(122, txty);
                 Console.Write("Hız Değeri Girin");
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -349,18 +411,22 @@ namespace SnowmanGame
                         Console.SetCursorPosition(122, txty);
                         Console.Write("Hata! ");
                         Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write("Lütfen sayı girin: ");
-                        txty++;
+                        Console.Write("Lütfen sayı girin                      ");
+                        Console.SetCursorPosition(147, txty - 1);
+                        Console.Write("                    ");
+                        Console.SetCursorPosition(147, txty - 1);
                         continue;
                     }
-                    else if (angle < 5 || angle > 85)
+                    else if (speed < 5 || speed > 25)
                     {
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
                         Console.SetCursorPosition(122, txty);
                         Console.Write("Hata! ");
                         Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write("Lütfen 5 ile 25 arasında bir sayı girin: ");
-                        txty++;
+                        Console.Write("Lütfen 5 ile 25 arasında bir sayı girin");
+                        Console.SetCursorPosition(147, txty - 1);
+                        Console.Write("                    ");
+                        Console.SetCursorPosition(147, txty - 1);
                         continue;
                     }
                     else
@@ -385,30 +451,38 @@ namespace SnowmanGame
                     vy = -speed * Math.Sin(radyan);
                 }
 
-                Console.ForegroundColor = ConsoleColor.Green;
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                Console.SetCursorPosition(122, txty + 1);
+                Console.Write("(Animasyonu geçmek için space + enter bas)");
+                Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.SetCursorPosition(122, txty);
-                Console.Write("Atışı başlatmak için herhangi bir tuşa bas!");
-                Console.ReadKey();
+                Console.Write("                                                    ");
                 Console.SetCursorPosition(122, txty);
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.Write("                                           ");
+                Console.Write("Başlamak için enter'e bas");
+                string animation = Console.ReadLine();
+                Console.SetCursorPosition(122, txty + 1);
+                Console.Write("                                          ");
                 Console.SetCursorPosition(122, txty);
-                Console.Write("Top atılıyor...");
-                Thread.Sleep(1000); 
+                Console.Write("Top atılıyor...          ");
+                Thread.Sleep(1000);
+
+                int bs = 0;
+                int rs = 0;
 
                 #endregion
 
                 // Topu atma döngüsü
                 while (true)
                 {
-                    Thread.Sleep(12);
+                    if (animation == "")
+                        Thread.Sleep(12);
 
                     int x = (int)ballx;
                     int y = (int)bally;
 
                     // Topun anlık konumu
                     int virtualy = 40 - y;
-                    Console.SetCursorPosition(74, 41);
+                    Console.SetCursorPosition(84, 41);
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write(x + " " + virtualy + " ");
 
@@ -422,44 +496,122 @@ namespace SnowmanGame
                     if (y >= 40)
                     {
                         Console.SetCursorPosition(122, txty);
+                        Console.Write("                                        ");
+                        Console.SetCursorPosition(122, txty);
                         Console.Write("Top Yere Düştü!");
                         txty++;
                         break;
                     }
 
-                    // 1. Mavi kardan adam kontrolü
-                    if (x == snwblue1x && y == snwblue1y)
+                    // Mavi atıcıyı vurma kontrolü
+                    if (x == shtbluex && y == shtbluey)
                     {
+                        if (bs == 2)
+                        {
+                            Console.SetCursorPosition(122, txty);
+                            Console.Write("                                        ");
+                            Console.SetCursorPosition(122, txty);
+                            Console.Write("Mavi Atıcıyı Vurdun! ");
+                            txty++;
+
+                            if (turn == 1)
+                            {
+                                stay = 1;
+                                Console.Write("Tekrar atış yapabilirsin");
+                            }
+
+                            break;
+                        }
+                        else
+                        {
+                            bs = 1;
+                        }
+                    }
+
+                    // Kırmızı atıcıyı vurma kontrolü
+                    if (x == shtredx && y == shtredy)
+                    {
+                        if (rs == 2)
+                        {
+                            Console.SetCursorPosition(122, txty);
+                            Console.Write("                                        ");
+                            Console.SetCursorPosition(122, txty);
+                            Console.Write("Kırmızı Atıcıyı Vurdun! ");
+                            txty++;
+
+                            if (turn == 0)
+                            {
+                                stay = 1;
+                                Console.Write("Tekrar atış yapabilirsin");
+                            }
+
+                            break;
+                        }
+                        else
+                        {
+                            rs = 1;
+                        }
+                    }
+
+                    #region Başta kendini vurmama kontrolü
+
+                    if (bs == 1)
+                        bs = 0;
+                    else if (bs == 0)
+                        bs = 2;
+
+                    if (rs == 1)
+                        rs = 0;
+                    else if (rs == 0)
+                        rs = 2;
+
+                    #endregion
+
+                    // 1. Mavi kardan adam kontrolü
+                    if (x == snwblue1x && y == snwblue1y && snwblue1 == 1)
+                    {
+                        Console.SetCursorPosition(122, txty);
+                        Console.Write("                                        ");
                         Console.SetCursorPosition(122, txty);
                         Console.Write("Mavi Kardan Adamını Vurdun!");
                         txty++;
+                        snwblue1 = 0;
                         break;
                     }
 
                     // 2. Mavi kardan adam kontrolü
-                    if (x == snwblue2x && y == snwblue2y)
+                    if (x == snwblue2x && y == snwblue2y && snwblue2 == 1)
                     {
+                        Console.SetCursorPosition(122, txty);
+                        Console.Write("                                        ");
                         Console.SetCursorPosition(122, txty);
                         Console.Write("Mavi Kardan Adamını Vurdun!");
                         txty++;
+                        snwblue2 = 0;
                         break;
                     }
 
                     // 1. Kırmızı kardan adam kontrolü
-                    if (x == snwred1x && y == snwred1y)
+                    if (x == snwred1x && y == snwred1y && snwred1 == 1)
                     {
+                        Console.SetCursorPosition(122, txty);
+                        Console.Write("                                        ");
                         Console.SetCursorPosition(122, txty);
                         Console.Write("Kırmızı Kardan Adamını Vurdun!");
                         txty++;
+                        snwred1 = 0;
                         break;
                     }
 
-                    // 2. Mavi kardan adam kontrolü
-                    if (x == snwred2x && y == snwred2y)
+                    // 2. Kırmızı kardan adam kontrolü
+                    if (x == snwred2x && y == snwred2y && snwred2 == 1)
                     {
+                        Console.SetCursorPosition(122, txty);
+                        Console.Write("                                        ");
                         Console.SetCursorPosition(122, txty);
                         Console.Write("Kırmızı Kardan Adamını Vurdun!");
                         txty++;
+                        snwred2 = 0;
                         break;
                     }
 
@@ -467,7 +619,9 @@ namespace SnowmanGame
                     if (x == wall1x && y >= wall1y && y <= wall1end)
                     {
                         Console.SetCursorPosition(122, txty);
-                        Console.Write("Top Duvara Çarptı!");
+                        Console.Write("                                        ");
+                        Console.SetCursorPosition(122, txty);
+                        Console.Write("Duvara Çarptın!");
                         txty++;
                         break;
                     }
@@ -476,13 +630,15 @@ namespace SnowmanGame
                     if (x == wall2x && y >= wall2y && y <= wall2end)
                     {
                         Console.SetCursorPosition(122, txty);
-                        Console.Write("Top Duvara Çarptı!");
+                        Console.Write("                                        ");
+                        Console.SetCursorPosition(122, txty);
+                        Console.Write("Duvara Çarptın!");
                         txty++;
                         break;
                     }
 
                     // Top izi çizdirme
-                    if (y >= 0 && x <= 119 && x >= 0)
+                    if (y >= 0 && x <= 119 && x >= 0 && (x != shtbluex || y != shtbluey) && (x != shtredx || y != shtredy))
                     {
                         Console.SetCursorPosition(x, y);
 
@@ -502,27 +658,58 @@ namespace SnowmanGame
                         if (tracesize == 1)
                             Console.Write("o");
                         if (tracesize == 2)
-                            Console.Write("O");     
+                            Console.Write("O");
                     }
+
+                    #region Hesaplamaları güncelleme
 
                     vx = vx + windspeed * dt;
                     vy = vy + g * dt;
                     ballx = ballx + vx * dt;
                     bally = bally + vy * dt;
+
+                    #endregion
                 }
+
+                #region Kazanma kontrolü
+
+                if (snwblue1 == 0 && snwblue2 == 0)
+                {
+                    Console.SetCursorPosition(122, txty);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("Oyunu Kırmızı Takım Kazandı!");
+                    txty++;
+                    break;
+                }
+                if (snwred1 == 0 && snwred2 == 0)
+                {
+                    Console.SetCursorPosition(122, txty);
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.Write("Oyunu Mavi Takım Kazandı!");
+                    txty++;
+                    break;
+                }
+
+                #endregion
 
                 #region Yeni tura geçme işlemi
 
                 Thread.Sleep(1000);
                 Console.SetCursorPosition(122, txty);
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write("Yeni tura geçmek için herhangi bir tuşa bas!");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write("Yeni tura geçmek için herhangi bir tuşa bas");
                 Console.ReadKey();
                 Console.SetCursorPosition(122, txty);
                 Console.Write("                                            ");
 
                 #endregion
             }
+
+            // Oyun sonu
+            Console.SetCursorPosition(122, txty);
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write("Oyun bitti! Çıkmak için herhangi bir tuşa bas");
+            Console.ReadKey();
         }
     }
 }
