@@ -53,10 +53,10 @@ namespace SnowmanGame
             int wall2y = 0;
             int wall2end = 0;
 
-            int snwblue1 = 0;
-            int snwblue2 = 0;
-            int snwred1 = 0;
-            int snwred2 = 0;
+            int snwblue1 = 1;
+            int snwblue2 = 1;
+            int snwred1 = 1;
+            int snwred2 = 1;
 
             double dt = 0.03;
             double g = 1;
