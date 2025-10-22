@@ -77,7 +77,8 @@ namespace SnowmanGame
             }
             Console.Write("╝");
 
-            while (true) // Tur Döngüsü
+            // Tur Döngüsü
+            while (true)
             {
                 // Sıra Değiştirme Kontrolü
                 if (stay == 0)
@@ -453,7 +454,7 @@ namespace SnowmanGame
 
                 Console.ForegroundColor = ConsoleColor.DarkMagenta;
                 Console.SetCursorPosition(122, txty + 1);
-                Console.Write("(Animasyonu geçmek için space + enter bas)");
+                Console.Write("(Animasyonu geçmek için önce space'e bas)");
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.SetCursorPosition(122, txty);
                 Console.Write("                                                    ");
