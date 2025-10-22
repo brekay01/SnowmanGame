@@ -27,7 +27,7 @@ namespace SnowmanGame
             double vy = 0;
 
             int txty = 0;
-            int turn = 1; // Sıranın kimde olduğunu belirleyen değişken ( 0 = Mavi , 1 = Kırmızı )
+            int turn = 1;
             int round = 0;
             int stay = 0;
             int mapcount = 0;
@@ -53,10 +53,10 @@ namespace SnowmanGame
             int wall2y = 0;
             int wall2end = 0;
 
-            int snwblue1 = 1;
-            int snwblue2 = 1;
-            int snwred1 = 1;
-            int snwred2 = 1;
+            int snwblue1 = 0;
+            int snwblue2 = 0;
+            int snwred1 = 0;
+            int snwred2 = 0;
 
             double dt = 0.03;
             double g = 1;
@@ -165,12 +165,18 @@ namespace SnowmanGame
                 #region Map Oluşturma  
 
                 Console.ForegroundColor = ConsoleColor.Blue;
+                if (turn == 0)
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.SetCursorPosition(shtbluex, shtbluey);
                 Console.Write("X");
+                Console.ResetColor();
 
                 Console.ForegroundColor = ConsoleColor.DarkRed;
+                if (turn == 1)
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.SetCursorPosition(shtredx, shtredy);
                 Console.Write("X");
+                Console.ResetColor();
 
                 // 1. Mavi Kardan Adamı
                 while (true)
@@ -267,9 +273,9 @@ namespace SnowmanGame
                 // 1. Duvar Oluşturma Döngüsü
                 for (int wall1loop = 0; wall1loop < wall1length; wall1loop++)
                 {
-                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.SetCursorPosition(wall1x, wall1y + wall1loop);
-                    Console.Write("#");
+                    Console.Write("|");
                 }
 
                 // 2. Duvarın 1. Duvarla Çakışma Kontrolü
@@ -293,7 +299,7 @@ namespace SnowmanGame
                 for (int wall2loop = 0; wall2loop < wall2length; wall2loop++)
                 {
                     Console.SetCursorPosition(wall2x, wall2y + wall2loop);
-                    Console.Write("#");
+                    Console.Write("|");
                 }
 
                 #endregion
@@ -332,11 +338,16 @@ namespace SnowmanGame
 
                 windspeed = rnd.Next(0, 401);
                 windspeed = (windspeed - 200) / 100;
-                Console.SetCursorPosition(103, 41);
+                Console.SetCursorPosition(101, 41);
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("Rüzgar Hızı: ");
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.Write(windspeed + "    ");
+                if (windspeed > 0)
+                    Console.Write(">> " + windspeed + "    ");
+                else if (windspeed < 0)
+                    Console.Write("<< " + (windspeed + 2) + "        ");
+                else
+                    Console.Write("Rüzgar yok          ");
 
                 #endregion
 
@@ -677,16 +688,24 @@ namespace SnowmanGame
                 if (snwblue1 == 0 && snwblue2 == 0)
                 {
                     Console.SetCursorPosition(122, txty);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Oyunu ");
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write("Oyunu Kırmızı Takım Kazandı!");
+                    Console.Write("Kırmızı ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Takım Kazandı!");
                     txty++;
                     break;
                 }
                 if (snwred1 == 0 && snwred2 == 0)
                 {
                     Console.SetCursorPosition(122, txty);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Oyunu ");
                     Console.ForegroundColor = ConsoleColor.DarkCyan;
-                    Console.Write("Oyunu Mavi Takım Kazandı!");
+                    Console.Write("Mavi ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Takım Kazandı!");
                     txty++;
                     break;
                 }
@@ -709,7 +728,7 @@ namespace SnowmanGame
             // Oyun sonu
             Console.SetCursorPosition(122, txty);
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.Write("Oyun bitti! Çıkmak için herhangi bir tuşa bas");
+            Console.Write("Çıkmak için herhangi bir tuşa bas");
             Console.ReadKey();
         }
     }
