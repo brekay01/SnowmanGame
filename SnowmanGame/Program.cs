@@ -86,18 +86,14 @@ namespace SnowmanGame
                     if (turn == 1)
                     {
                         turn = 0;
-                        stay = 0;
                         round++;
                     }
                     else if (turn == 0)
                     {
                         turn = 1;
                         round++;
-                        stay = 0;
                     }
                 }
-                else if (stay == 1)
-                    stay = 0;
 
                 // Mapi temizleme döngüsü
                 for (int cx = 0; cx < 120; cx++)
@@ -110,7 +106,7 @@ namespace SnowmanGame
                 }
 
                 // 3 Turda Bir Random Değişme Kontrolü
-                if (round % 6 == 1)
+                if (round % 6 == 1 && stay == 0)
                 {
                     shtbluex = rnd.Next(0, 40);
                     shtbluey = rnd.Next(0, 40);
@@ -163,7 +159,7 @@ namespace SnowmanGame
                 }
 
                 #region Map Oluşturma  
-
+                
                 Console.ForegroundColor = ConsoleColor.Blue;
                 if (turn == 0)
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -481,6 +477,8 @@ namespace SnowmanGame
                 int bs = 0;
                 int rs = 0;
 
+                stay = 0;
+
                 #endregion
 
                 // Topu atma döngüsü
@@ -489,8 +487,8 @@ namespace SnowmanGame
                     if (animation == "")
                         Thread.Sleep(12);
 
-                    int x = (int)ballx;
-                    int y = (int)bally;
+                    int x = (int)Math.Round(ballx);
+                    int y = (int)Math.Round(bally);
 
                     // Topun anlık konumu
                     int virtualy = 40 - y;
@@ -665,12 +663,14 @@ namespace SnowmanGame
                         if (tracecolor == 2 && turn == 1)
                             Console.ForegroundColor = ConsoleColor.DarkRed;
 
-                        int tracesize = rnd.Next(1, 3);
+                        int tracesize = rnd.Next(1, 4);
 
                         if (tracesize == 1)
                             Console.Write("o");
                         if (tracesize == 2)
                             Console.Write("O");
+                        if (tracesize == 3)
+                            Console.Write("0");
                     }
 
                     #region Hesaplamaları güncelleme
