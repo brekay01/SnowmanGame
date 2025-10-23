@@ -63,10 +63,10 @@ namespace SnowmanGame
 
             #endregion
 
-            // Tur Döngüsü
+            // Tur döngüsü
             while (true)
             {
-                // Sıra Değiştirme Kontrolü
+                // Sıra değiştirme kontrolü
                 if (stay == 0)
                 {
                     if (turn == 1)
@@ -128,7 +128,7 @@ namespace SnowmanGame
                     if (round == 1)
                     {
                         Console.SetCursorPosition(122, txty);
-                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Console.ForegroundColor = ConsoleColor.DarkMagenta;
                         Console.WriteLine("Oyun Başladı!");
                         txty++;
                     }
@@ -147,7 +147,7 @@ namespace SnowmanGame
 
                         txty = 0;
 
-                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Console.ForegroundColor = ConsoleColor.DarkMagenta;
                         Console.SetCursorPosition(122, txty);
                         Console.WriteLine("Map Güncellendi!");
                         txty++;
@@ -481,8 +481,12 @@ namespace SnowmanGame
                 Console.SetCursorPosition(122, txty + 1);
                 Console.Write("                                          ");
                 Console.SetCursorPosition(122, txty);
-                Console.Write("Top atılıyor...          ");
-                Thread.Sleep(1000);
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                if (animation == "")
+                {
+                    Console.Write("Top atılıyor...          ");
+                    Thread.Sleep(1000);
+                }
 
                 int bs = 0;
                 int rs = 0;
