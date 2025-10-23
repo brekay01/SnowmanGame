@@ -12,7 +12,7 @@ namespace SnowmanGame
     internal class Program
     {
         static void Main(string[] args)
-        {
+        {         
             #region Değişkenler
 
             Random rnd = new Random();
@@ -63,20 +63,6 @@ namespace SnowmanGame
 
             #endregion
 
-            // Çerçeve çizgileri
-            Console.ForegroundColor = ConsoleColor.DarkGray;
-            for (int lineloop1 = 0; lineloop1 < 40; lineloop1++)
-            {
-                Console.SetCursorPosition(120, lineloop1);
-                Console.Write("║");
-            }
-            for (int lineloop2 = 0; lineloop2 < 120; lineloop2++)
-            {
-                Console.SetCursorPosition(lineloop2, 40);
-                Console.Write("═");
-            }
-            Console.Write("╝");
-
             // Tur Döngüsü
             while (true)
             {
@@ -105,7 +91,7 @@ namespace SnowmanGame
                     }
                 }
 
-                // 3 Turda Bir Random Değişme Kontrolü
+                // Random ve sağ panel kontrolü
                 if (round % 6 == 1 && stay == 0)
                 {
                     shtbluex = rnd.Next(0, 40);
@@ -138,7 +124,17 @@ namespace SnowmanGame
 
                     mapcount++;
 
-                    if (round != 1) // İlk round map güncellendi yazmaması için kontrol
+                    // Oyun başladı mesajı
+                    if (round == 1)
+                    {
+                        Console.SetCursorPosition(122, txty);
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Console.WriteLine("Oyun Başladı!");
+                        txty++;
+                    }
+
+                    // Sağ panel temizleme ve map güncellendi mesajı
+                    if (round != 1)
                     {
                         for (int t1 = 122; t1 < 180; t1++)
                         {
@@ -159,7 +155,21 @@ namespace SnowmanGame
                 }
 
                 #region Map Oluşturma  
-                
+
+                // Çerçeve çizgileri
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                for (int lineloop1 = 0; lineloop1 < 40; lineloop1++)
+                {
+                    Console.SetCursorPosition(120, lineloop1);
+                    Console.Write("║");
+                }
+                for (int lineloop2 = 0; lineloop2 < 120; lineloop2 = lineloop2 + 2)
+                {
+                    Console.SetCursorPosition(lineloop2, 40);
+                    Console.Write("══");
+                }
+                Console.Write("╝");
+
                 Console.ForegroundColor = ConsoleColor.Blue;
                 if (turn == 0)
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -652,7 +662,7 @@ namespace SnowmanGame
                     {
                         Console.SetCursorPosition(x, y);
 
-                        int tracecolor = rnd.Next(1, 3);
+                        int tracecolor = rnd.Next(1, 4);
 
                         if (tracecolor == 1 && turn == 0)
                             Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -662,6 +672,8 @@ namespace SnowmanGame
                             Console.ForegroundColor = ConsoleColor.Red;
                         if (tracecolor == 2 && turn == 1)
                             Console.ForegroundColor = ConsoleColor.DarkRed;
+                        if (tracecolor == 3)
+                            Console.ForegroundColor = ConsoleColor.DarkGray;
 
                         int tracesize = rnd.Next(1, 4);
 
@@ -725,11 +737,14 @@ namespace SnowmanGame
                 #endregion
             }
 
-            // Oyun sonu
+            #region Oyun Sonu
+
             Console.SetCursorPosition(122, txty);
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.Write("Çıkmak için herhangi bir tuşa bas");
             Console.ReadKey();
+
+            #endregion
         }
     }
 }
