@@ -312,7 +312,7 @@ namespace SnowmanGame
 
                 #region Alt Panel Kontrolleri
 
-                Console.SetCursorPosition(57, 41);
+                Console.SetCursorPosition(56, 41);
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("Topun Anlık Koordinatları: ");
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -349,11 +349,11 @@ namespace SnowmanGame
                 Console.Write("Rüzgar Hızı: ");
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 if (windspeed > 0)
-                    Console.Write(">> " + windspeed + "    ");
+                    Console.Write($">> {windspeed:F2}    ");
                 else if (windspeed < 0)
-                    Console.Write("<< " + (windspeed + 2) + "        ");
+                    Console.Write($">> {Math.Abs(windspeed):F2}    ");
                 else
-                    Console.Write("Rüzgar yok          ");
+                    Console.Write("Yok          ");
 
                 #endregion
 
@@ -502,7 +502,7 @@ namespace SnowmanGame
 
                     // Topun anlık konumu
                     int virtualy = 40 - y;
-                    Console.SetCursorPosition(84, 41);
+                    Console.SetCursorPosition(83, 41);
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write(x + " " + virtualy + " ");
 
