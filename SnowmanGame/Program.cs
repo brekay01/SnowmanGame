@@ -351,7 +351,7 @@ namespace SnowmanGame
                 if (windspeed > 0)
                     Console.Write($">> {windspeed:F2}    ");
                 else if (windspeed < 0)
-                    Console.Write($">> {Math.Abs(windspeed):F2}    ");
+                    Console.Write($"<< {Math.Abs(windspeed):F2}    ");
                 else
                     Console.Write("Yok          ");
 
